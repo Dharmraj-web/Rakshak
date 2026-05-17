@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import { createServer as createViteServer } from 'vite';
 import Database from 'better-sqlite3';
 import multer from 'multer';
 import crypto from 'crypto';
@@ -8,17 +7,18 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { nanoid } from 'nanoid';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
 
 console.log('[RAKSHAK] Bootstrapping server...');
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-// Ensure the server can find 'uploads' relative to its execution path
+// In full-stack apps, we use process.cwd() as the reliable base for relative paths
 const rootDir = process.cwd();
 const uploadsDir = path.join(rootDir, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+  try {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  } catch (err) {
+    console.warn(`[RAKSHAK] Could not create uploads directory: ${err}`);
+  }
 }
 
 console.log(`[RAKSHAK] Storage initialization: ${uploadsDir}`);
@@ -487,7 +487,8 @@ async function startServer() {
   });
 
   if (process.env.NODE_ENV !== 'production') {
-    console.log('[RAKSHAK] Starting VITE development server...');
+    console.log('[RAKSHAK] Loading Vite for development...');
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
