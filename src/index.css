@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-cyber-black: #050506;
+  --color-cyber-gray: #08080a;
+  --color-cyber-bright: #10b981;
+  --color-cyber-pink: #064e3b;
+  --color-cyber-border: rgba(255, 255, 255, 0.05);
+}
+
+@layer base {
+  body {
+    @apply bg-cyber-black text-white font-sans selection:bg-cyber-bright selection:text-black;
+  }
+}
+
+.glass {
+  @apply bg-white/[0.02] backdrop-blur-3xl border border-white/10;
+}
+
+.cyber-glow {
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+}
+
+.cyber-button {
+  @apply relative overflow-hidden transition-all duration-300 active:scale-95;
+}
+
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes scan {
+  0% { top: 0; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.animate-scan {
+  animation: scan 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+

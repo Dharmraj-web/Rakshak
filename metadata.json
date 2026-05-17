@@ -1,0 +1,6 @@
+{
+  "name": "RAKSHAK",
+  "description": "Zero Trust Secure File Sharing Platform with real-time owner-controlled access.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
